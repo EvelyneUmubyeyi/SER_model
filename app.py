@@ -1,13 +1,13 @@
 import numpy as np
 import requests
 import librosa
+import tensorflow as tf
 import streamlit as st
 import pandas as pd
 import soundfile as sf
 from streamlit_lottie import st_lottie
 from st_audiorec import st_audiorec
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.models import load_model
 from pydub.utils import mediainfo
 import tempfile
 import pickle
@@ -22,7 +22,7 @@ emotion_messages = {
     'sad': "Allow yourself to feel, but also seek moments of comfort and activities that uplift your spirits."
 }
 
-model = load_model('ser_model.h5')
+model = tf.keras.models.load_model('ser_model.h5')
 
 with open('scaler.pkl', 'rb') as file:
     scaler = pickle.load(file)
