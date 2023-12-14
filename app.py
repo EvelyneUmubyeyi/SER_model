@@ -126,6 +126,7 @@ with st.container():
             st.error("File size exceeds the limit. Please upload a file within 500KB.")
         else:
             temp_path = get_audio_data(uploaded_file)
+            st.audio(temp_path)
             features = get_audio_features(temp_path)
             X =[]
             for i in features:
