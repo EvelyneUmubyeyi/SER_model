@@ -117,7 +117,7 @@ Experience the captivating world of AI-driven emotion detection and gain insight
 
 with st.container():
     st.write('---')
-    st.write('''Record a short audio below about how you're felling your emotion will be detected!''')
+    st.write('''Upload a short audio below about how you're felling your emotion will be detected!''')
 
     uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3"])
 
