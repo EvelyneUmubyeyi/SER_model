@@ -8,21 +8,14 @@ import soundfile as sf
 from streamlit_lottie import st_lottie
 from st_audiorec import st_audiorec
 from sklearn.preprocessing import StandardScaler
-from pydub.utils import mediainfo
 import tempfile
 import pickle
+from st_audiorec import st_audiorec
+import streamlit.components.v1 as components
+from streamlit import session_state
+import json
 
-
-emotion_messages = {
-    'angry': "Take a deep breath and count to ten. Try redirecting your energy into something positive.",
-    'disgust': "Acknowledge your feelings, then focus on things that bring you joy and positivity.",
-    'fear': "Remember, you're stronger than your fears. Try grounding techniques to center yourself.",
-    'happy': "Embrace this happiness! Share it with loved ones or indulge in activities that amplify your joy.",
-    'neutral': "Take a moment for yourself. Explore hobbies or activities that bring a sense of calmness.",
-    'sad': "Allow yourself to feel, but also seek moments of comfort and activities that uplift your spirits."
-}
-
-model = tf.keras.models.load_model('ser_model.h5')
+model = tf.keras.models.load_model('ser_model_african_optimized.h5')
 
 with open('scaler.pkl', 'rb') as file:
     scaler = pickle.load(file)
@@ -41,7 +34,7 @@ def check_for_missing_values(arr):
         return False
     
 def preprocessing(features):
-    features_dataset = pd.DataFrame(X)
+    features_dataset = pd.DataFrame(features)
     features_dataset = features_dataset.fillna(0)
     features_dataset = features_dataset.values.reshape(1, -1)
     if features_dataset.shape[1] < 2376:
@@ -58,7 +51,10 @@ def preprocessing(features):
 
 def get_audio_data(audio_file):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-        temp_file.write(audio_file.read())
+        if isinstance(uploaded_file, bytes):
+            temp_file.write(audio_file)
+        else:
+            temp_file.write(audio_file.read())
         temp_path = temp_file.name
         return temp_path
     
@@ -85,6 +81,41 @@ def get_audio_features(path):
     features = np.array(audio_features)
     return features
 
+def ChangeButtonColour(widget_label, font_color, background_color='transparent', x_padding='20px', y_padding='5px'):
+    htmlstr = f"""
+        <script>
+            var elements = window.parent.document.querySelectorAll('button');
+            for (var i = 0; i < elements.length; ++i) {{ 
+                if (elements[i].innerText == '{widget_label}') {{ 
+                    elements[i].style.color ='{font_color}';
+                    elements[i].style.background = '{background_color}';
+                    elements[i].style.padding = '{y_padding} {x_padding}';
+                    elements[i].style.transition = 'background-color 0.3s, color 0.3s';
+                    elements[i].style.border = 'none';
+                    elements[i].style.marginBottom = '0';
+                    elements[i].addEventListener("mouseover", function() {{
+                        this.style.opacity = '{'50%'}';
+                    }});
+                    elements[i].addEventListener("mouseout", function() {{
+                        this.style.opacity = '{'100%'}';
+                    }});
+                }}
+            }}
+        </script>
+        """
+    components.html(f"{htmlstr}", height=0, width=0)
+
+
+def get_prediction(file):
+    temp_path = get_audio_data(file)
+    features = get_audio_features(temp_path)
+    X =[]
+    for i in features:
+        X.append(i)
+    preprocessed_features = preprocessing(X)
+    predicted_emotion = predict(preprocessed_features)
+    return predicted_emotion
+
 def load_lottie(url):
     r=requests.get(url)
     if r.status_code != 200:
@@ -92,10 +123,13 @@ def load_lottie(url):
     return r.json()
 
 st.set_page_config(page_title="EmotionDetect", page_icon="🎙", layout='wide')
+with open('feedback.json', 'r') as file:
+    emotions_data = json.load(file)
 
+def display_emotion_info(emotion_name):
+    pass
 
 lottie_file = load_lottie("https://lottie.host/4d5b2501-51d4-4914-8905-85da70376358/ShmUpG2m0J.json")
-
 
 with st.container():
     left_column, right_column = st.columns(2)
@@ -103,36 +137,80 @@ with st.container():
         st.subheader('Hello :wave: How are you doing today😊')
         st.title('Welcome to EmotionDetect💝')
         st.write('''
-This innovative web app harnesses the power of Speech Emotion Recognition (SER) technology to decode emotions from your voice. With EmotionDetect, you can effortlessly record your voice and instantly uncover the emotional nuances within. 
-
-Experience the captivating world of AI-driven emotion detection and gain insight into the hidden dimensions of your speech. Discover, explore, and uncover the emotions within your voice with EmotionDetect – where your voice tells the story of your emotions.
-''')
+            This innovative web app harnesses the power of Speech Emotion Recognition (SER) technology to decode emotions 
+            from your voice. With EmotionDetect, you can effortlessly record your voice and instantly uncover the emotional 
+            nuances within. 
+                 
+            You will gain insight into your emotions and receive basic mental health support to navigate them, alongside 
+            access to a wealth of other resources on mental health available on the platform, as well as contacts of mental health 
+            proffessional you can reach out to.
+        ''')
 
     with right_column:
         if lottie_file is not None:
-            st_lottie(lottie_file, speed=1, height=400, key="animated_image")
+            st_lottie(lottie_file, height=500, speed=1, key="animated_image")
         else:
             st.write("Failed to load Lottie animation.")
 
 
 with st.container():
-    st.write('---')
-    st.write('''Upload a short audio below about how you're felling your emotion will be detected!''')
+    def upload_button_clicked():
+        st.session_state.voice_space = 'upload'
 
-    uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3"])
+    def record_button_clicked():
+        st.session_state.voice_space = 'record'
 
-    if uploaded_file is not None:
-        if len(uploaded_file.getvalue()) > 512000:
-            st.error("File size exceeds the limit. Please upload a file within 500KB.")
-        else:
-            temp_path = get_audio_data(uploaded_file)
-            st.audio(temp_path)
-            features = get_audio_features(temp_path)
-            X =[]
-            for i in features:
-                X.append(i)
-            preprocessed_features = preprocessing(X)
-            emotion = predict(preprocessed_features)
-            st.subheader(emotion.title())
-            st.write(emotion_messages[emotion])
-    
+    with st.container():  
+        st.subheader('Record your self here')
+        cols = st.columns(11)
+
+        if 'voice_space' not in session_state:
+            st.session_state.voice_space = 'record'
+
+        if session_state.voice_space == 'record':
+            uploaded_file = st_audiorec()
+        elif session_state.voice_space == 'upload':
+            uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3"])
+            st.audio(uploaded_file)
+        cols[0].button('Record', key='b1', on_click=record_button_clicked)
+        cols[1].button('Upload', key='b2', on_click=upload_button_clicked)
+
+        if uploaded_file is not None:
+            # if len(uploaded_file.getvalue()) > 512000:
+            #     st.error("File size exceeds the limit. Please upload a file within 500KB.")
+            # else:
+            predicted_emotion = get_prediction(uploaded_file)
+            with st.container():
+                st.write('')
+                if predicted_emotion == "sad":
+                    st.subheader(f"😞{predicted_emotion.title()}")
+                elif predicted_emotion == "happy":
+                    st.subheader(f"😊{predicted_emotion.title()}")
+                elif predicted_emotion == "fear":
+                    st.subheader(f"😱{predicted_emotion.title()}")
+                elif predicted_emotion == "disgust":
+                    st.subheader(f"🤢{predicted_emotion.title()}")
+                elif predicted_emotion == "neutral":
+                    st.subheader(f"😐{predicted_emotion.title()}")
+                else:
+                    st.subheader(f"😠{predicted_emotion.title()}")
+
+                st.markdown(f"<h4><b>✅Every emotion counts!</b></h4>", unsafe_allow_html=True)
+                st.write(emotions_data[predicted_emotion]['validation_sentence'])
+                st.markdown(f"<h4><b>💡Things you can know about feeling {predicted_emotion}</b></h4>", unsafe_allow_html=True)
+                for fact in emotions_data[predicted_emotion]['facts']:
+                    st.write("-", fact)
+                if predicted_emotion == "sad":
+                    st.markdown(f"<h4><b>📋Creative things you can try to cope with sadness</b></h4>", unsafe_allow_html=True)
+                elif predicted_emotion == "happy":
+                    st.markdown(f"<h4><b>📋Creative things you can try to celebrate happiness</b></h4>", unsafe_allow_html=True)
+                elif predicted_emotion == "neutral":
+                    st.markdown(f"<h4><b>📋Creative things you can try to embrace neutrality</b></h4>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<h4><b>📋Creative things you can try to cope with {predicted_emotion}</b></h4>", unsafe_allow_html=True)
+
+                for method in emotions_data[predicted_emotion]['coping_methods']:
+                    st.write("-", method)
+                
+        ChangeButtonColour('Record', '#ffffff', '#f92f60') 
+        ChangeButtonColour('Upload', '#ffffff', '#ffb02e') 

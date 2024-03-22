@@ -1,0 +1,80 @@
+{
+    "sad":{
+      "validation_sentence": "It's okay to feel sad sometimes; everyone experiences ups and downs. Remember, it's okay to reach out for support if you're feeling overwhelmed by sadness.",
+      "facts": [
+        "Sadness is a normal and natural emotion that everyone experiences at some point in their lives.",
+        "It's okay to embrace sadness as a part of the human experience and allow oneself to feel and process it.",
+        "Sadness can provide valuable insights into one's emotions, needs, and values, leading to personal growth and resilience."
+      ],
+      "coping_methods": [
+        "Engage in self-care activities such as exercise, journaling, or spending time in nature to nurture your emotional well-being.",
+        "Practice mindfulness or relaxation techniques such as deep breathing or meditation to help regulate your emotions and reduce stress.",
+        "Write a letter to yourself from the perspective of a compassionate friend, offering words of kindness, encouragement, and understanding during difficult times."
+      ]
+    },
+    "angry":{
+      "validation_sentence": "Feeling angry is a natural response when things don't go as planned. Remember, it's okay to take a step back and breathe when you're feeling angry.",
+      "facts": [
+        "Anger is a powerful emotion that signals perceived threats, injustices, or violations of one's boundaries.",
+        "Acknowledging and expressing anger constructively is important, rather than suppressing or lashing out impulsively.",
+        "Anger can motivate individuals to assert themselves, set boundaries, and advocate for positive change in their lives and communities."
+      ],
+      "coping_methods": [
+        "Take a break and step away from the situation to cool off before responding impulsively.",
+        "Write a letter to the person or situation that triggered your anger, expressing your feelings candidly and without filter, then tear up or burn the letter as a symbolic release.",
+        "Practice assertive communication by expressing your feelings and needs calmly and respectfully."
+      ]
+    },
+    "disgust":{
+      "validation_sentence": "Feeling disgusted by certain situations is understandable; trust your instincts. Remember, it's okay to distance yourself from things that make you feel uncomfortable or disgusted.",
+      "facts": [
+        "Disgust serves as a protective mechanism against potential harm, warning individuals to avoid potentially dangerous or contaminated stimuli.",
+        "It's essential to recognize and respect individual differences in what evokes feelings of disgust, as they can vary widely across cultures and individuals.",
+        "Understanding the role of disgust can foster empathy and tolerance toward others' perspectives and experiences, even if they differ from one's own."
+      ],
+      "coping_methods": [
+        "Create a disgust jar where you write down things that evoke feelings of disgust, then seal them in the jar as a symbolic way of containing and letting go of negative emotions.",
+        "Engage in sensory-based activities such as aromatherapy, taking a hot bath with soothing essential oils, or enjoying a meal of your favorite comfort foods to counteract feelings of disgust and promote relaxation.",
+        "Challenge negative thoughts and beliefs associated with disgust by reframing them in a more neutral or compassionate light."
+      ]
+    },
+    "fear":{
+      "validation_sentence": "Feeling afraid is a normal reaction to uncertainty; take things one step at a time. Remember, it's okay to seek reassurance or support when you're feeling afraid.",
+      "facts": [
+        "Fear is an adaptive emotion that prepares the body and mind to respond to perceived threats or dangers.",
+        "It's normal to experience fear in unfamiliar or threatening situations, but it's essential not to let it paralyze or overwhelm oneself.",
+        "Confronting and managing fears gradually through exposure, support, and coping strategies can lead to personal growth and increased resilience."
+      ],
+      "coping_methods": [
+        "Practice relaxation techniques such as deep breathing or visualization to calm your nervous system and manage anxiety.",
+        "Educate yourself about the source of your fear and gather information to understand better and address it.",
+        "Create a fear jar where you write down your fears on slips of paper, then draw one slip at random each day and brainstorm small, manageable steps you can take to confront and overcome that fear."
+      ]
+    },
+    "happy":{
+      "validation_sentence": "It's wonderful to see you feeling happy; cherish these moments of joy. Remember, it's okay to celebrate and enjoy the things that bring you happiness.",
+      "facts": [
+        "Happiness is a subjective and fleeting emotion that arises from positive experiences, connections, and achievements.",
+        "It's important to appreciate and savor moments of happiness, as they can contribute to overall well-being and life satisfaction.",
+        "Cultivating gratitude, kindness, and meaningful relationships can enhance one's capacity for experiencing and sustaining happiness."
+      ],
+      "coping_methods": [
+        "Create a happiness jar where you write down moments of joy, gratitude, and accomplishment on slips of paper, then read them aloud whenever you need a mood boost or reminder of the good things in life.",
+        "Plan a surprise adventure or outing for yourself, whether it's exploring a new hiking trail, visiting a local attraction, or trying out a new hobby or activity that brings you joy and excitement.",
+        "Create a happiness vision board where you gather images, quotes, and reminders of the things that make you happy and inspired, then display it in a prominent place as a visual reminder of your goals and aspirations."
+      ]
+    },
+    "neutral":{
+      "validation_sentence": "Feeling neutral about something is normal; not every situation evokes strong emotions. Remember, it's okay to have a range of emotions, including neutrality, in different situations.",
+      "facts": [
+        "Feeling neutral about something indicates a lack of strong emotional attachment or investment, which can provide objectivity and balance in decision-making.",
+        "Neutral emotions allow individuals to approach situations with an open mind, free from bias or preconceived notions.",
+        "While neutrality is not a negative emotion, it can be negative if accompanied by feelings of detachment, apathy, or disengagement that interfere with one's ability to connect with others, experience pleasure, or pursue meaningful goals."
+      ],
+      "coping_methods": [
+        "Create a neutral sanctuary at home or in nature, a calm and tranquil space where you can retreat to relax, recharge, and find inner peace away from the distractions of daily life.",
+        "Engage in self-reflection to explore underlying emotions and motivations.",
+        "If you are feeling detached or disengaged, seek activities or experiences that spark curiosity and passion."
+      ]
+    }
+}
