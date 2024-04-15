@@ -119,7 +119,7 @@ def load_lottie(url):
         return None
     return r.json()
 
-st.set_page_config(page_title="EmotionDetect", page_icon="🎙", layout='wide')
+st.set_page_config(page_title="EmoVoice", page_icon="🎙", layout='wide')
 with open('feedback.json', 'r') as file:
     emotions_data = json.load(file)
 
