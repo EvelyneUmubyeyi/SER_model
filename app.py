@@ -12,7 +12,7 @@ import streamlit.components.v1 as components
 from streamlit import session_state
 import json
 
-model = tf.keras.models.load_model('ser_model.h5')
+model = tf.keras.models.load_model('ser_model_african_optimized.h5')
 
 with open('scaler.pkl', 'rb') as file:
     scaler = pickle.load(file)
