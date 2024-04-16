@@ -132,10 +132,10 @@ with st.container():
     left_column, right_column = st.columns(2)
     with left_column:
         st.subheader('Hello :wave: How are you doing today😊')
-        st.title('Welcome to EmotionDetect💝')
+        st.title('Welcome to EmoVoice💝')
         st.write('''
             This innovative web app harnesses the power of Speech Emotion Recognition (SER) technology to decode emotions 
-            from your voice. With EmotionDetect, you can effortlessly record your voice and instantly uncover the emotional 
+            from your voice. With EmoVoice, you can effortlessly record your voice and instantly uncover the emotional 
             nuances within. 
                  
             You will gain insight into your emotions and receive basic mental health support to navigate them, alongside 
